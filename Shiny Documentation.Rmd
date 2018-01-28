@@ -1,0 +1,37 @@
+---
+title: "Documentation"
+author: "Sasmira Shetty"
+date: "January 28, 2018"
+output: html_document
+---
+
+The plot shows Ozone and weather in New York City for five months.
+Depending on selection from user, the x axis is plotted at runtime. You can select appropriate radio button for Wind or Solar or Temp(x-axis variable) to plot the data with Ozone(y-axis variable).Default for x axis is set to "Wind"
+
+User also has the option to view Linear Model, there is a check box with label "Show/Hide Linear Model" , on selecting this checkbox, the linear model will be shown in the plot for selected variable against radio button and Ozone. Unchecking the box will hide the linear model.
+
+The Legend shows the color defined for each month.
+
+**Input Values**
+ 
+ -Radio Button with label " variable for X-Axis"  : You can select one of the variable to plot the x-axis. By Default "wind" is selected.
+ 
+ -Check Box with label "Show/Hide Linear Model" : Linear Model will be shown in the plot if this is checked
+ 
+**Output** 
+  -As per the selected Input values, plot is generated, the legend shows the color for Months
+
+
+Link to Gihub is available here : https://github.com/sasmiras/RStudio-Shiny
+
+Github has following files:
+
+1) ui.r - Code for Shiny UI is written in this file. Package Shine is required to execute the code
+
+2) server.r - Code for Shiny Server is written in this file
+
+3) Presentation.Rmd - This file gives brief summary about the findings and the code with its output
+
+4) Shiny Documentation.RMD - Code for User Documentation
+
+5) Shiny Documentation.HTML - User Documentation briefing how to use the application
