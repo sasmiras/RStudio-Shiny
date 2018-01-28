@@ -1,0 +1,12 @@
+name: SHD1
+title: SHD1
+username:
+account: sasmira
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 263973
+bundleId: 1196526
+url: https://sasmira.shinyapps.io/SHD1/
+when: 1517153890.9569
+asMultiple: FALSE
+asStatic: FALSE

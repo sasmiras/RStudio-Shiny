@@ -1,0 +1,12 @@
+name: Presentation
+title: Presentation
+username:
+account: sasmira
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 263970
+bundleId: 1196533
+url: https://sasmira.shinyapps.io/Presentation/
+when: 1517154472.43134
+asMultiple: FALSE
+asStatic: FALSE

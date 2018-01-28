@@ -1,0 +1,108 @@
+---
+title: "Weather Data of NY City"
+author: "Sasmira Shetty"
+date: "January 28, 2018"
+output: ioslides_presentation
+runtime: shiny
+---
+
+##Data Analysis - Summary
+  
+  - Analysis was done on airquality data of New York City for Five Months
+  - Based on radio button selection, the x-axis is plotted. By default "Wind" is selected : Plot is shown in next slide
+  - It was observed that Ozone decreased with increase in Wind,
+  - Ozone Increased with increase in Solar and Temp
+  - Ozone was maximum at 168 when Wind was 3.4, Solar was 238 and Temp was 81 in the month of August
+
+##Plot
+```{r eruptions, echo=FALSE}
+     radioButtons("rd",
+                    label="Select variable for X-Axis:",
+                    choices=list("Wind","Solar","Temp"),
+                    selected="Wind")
+      checkboxInput("showlm", "Show/Hide Linear Model ", value = FALSE)
+      
+
+renderPlot({
+   
+    dataY<-airquality$Ozone
+    dataX <- switch(input$rd,
+                    Wind = airquality$Wind,
+                    Solar = airquality$Solar.R,
+                    Temp = airquality$Temp
+                   )
+    
+    xlab<-input$rd
+    ylab<-"Ozone"
+    color <- ifelse(airquality$Month == 5, 'red',
+                    ifelse(airquality$Month == 6, 'blue', 
+                           ifelse(airquality$Month==7,'black',
+                                  ifelse(airquality$Month==8,'yellow','green'))))
+  if(input$rd=="Wind"){
+    model <- lm(Ozone ~ Wind, data = airquality)
+
+  }
+    
+    if(input$rd=='Solar'){
+      model <- lm(Ozone ~ Solar.R, data = airquality)
+      
+    }
+    if(input$rd=='Temp'){
+      model <- lm(Ozone ~ Temp, data = airquality)
+      
+    }
+    
+     
+   if(input$showlm){
+     plot(dataX, dataY, xlab = xlab, ylab = ylab,col=color,pch=19 )
+     legend('topright', legend = c('May','June','July','August','Sep'), col = c('red','blue','black','yellow','green'), cex = 0.8, pch = 19) 
+     abline(model, col = "red", lwd = 2)
+        }
+      else{plot(dataX, dataY, xlab = xlab, ylab = ylab,col=color,pch=19 )
+        legend('topright', legend = c('May','June','July','August','Sep'), col = c('red','blue','black','yellow','green'), cex = 0.8, pch = 19) 
+      }
+         
+  })
+```
+
+##
+```{r echo=TRUE, eval=FALSE}
+##Code
+     radioButtons("rd",
+                    label="Select variable for X-Axis:",
+                    choices=list("Wind","Solar","Temp"),
+                    selected="Wind")
+      checkboxInput("showlm", "Show/Hide Linear Model ", value = FALSE)
+    
+renderPlot({
+    dataY<-airquality$Ozone
+    dataX <- switch(input$rd,
+                    Wind = airquality$Wind,
+                    Solar = airquality$Solar.R,
+                    Temp = airquality$Temp)
+    xlab<-input$rd
+    ylab<-"Ozone"
+    color <- ifelse(airquality$Month == 5, 'red',
+                    ifelse(airquality$Month == 6, 'blue', 
+                           ifelse(airquality$Month==7,'black',
+                                  ifelse(airquality$Month==8,'yellow','green'))))
+```
+
+##
+```{r echo=TRUE, eval=FALSE}
+  if(input$rd=="Wind"){
+    model <- lm(Ozone ~ Wind, data = airquality)  }
+    if(input$rd=='Solar'){
+      model <- lm(Ozone ~ Solar.R, data = airquality)}
+    if(input$rd=='Temp'){
+      model <- lm(Ozone ~ Temp, data = airquality)  }
+    
+   if(input$showlm){
+     plot(dataX, dataY, xlab = xlab, ylab = ylab,col=color,pch=19 )
+     legend('topright', legend = c('May','June','July','August','Sep'), col = c('red','blue','black','yellow','green'), cex = 0.8, pch = 19) 
+     abline(model, col = "red", lwd = 2)
+        }
+      else{plot(dataX, dataY, xlab = xlab, ylab = ylab,col=color,pch=19 )
+        legend('topright', legend = c('May','June','July','August','Sep'), col = c('red','blue','black','yellow','green'), cex = 0.8, pch = 19) 
+      }  })
+  ```

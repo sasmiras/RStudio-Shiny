@@ -1,0 +1,91 @@
+---
+title: "Ozone and weather in  New York City"
+author: "Sasmira Shetty"
+date: "January 28, 2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The plot shows Ozone and weather in New York City for five months.
+Depending on selection from user, the x axis is plotted at runtime. You can select appropriate radio button for Wind or Solar or Temp(x-axis variable) to plot the data with Ozone(y-axis variable).
+
+User also has the option to view Linear Model, there is a check box with label "Show/Hide Linear Model" , on selecting this checkbox, the linear model will be shown in the plot for selected variable against radio button and Ozone. Unchecking the box will hide the linear model.
+
+The Legend shows the color defined for each month.
+
+
+
+This R Markdown document is made interactive using Shiny. Below is the same view as shown in the shiny app. 
+
+It shows the Input values
+ 
+ -Radio Button with label " variable for X-Axis:" , You can select one of the variable to plot the x-axis. By Default "wind" is selected.
+ 
+ -Check Box with label "Show/Hide Linear Model", Linear Model will be shown in the plot if this is checked
+ 
+ It shows the output
+ 
+  -Plot as per the selected Input values, the legend shows the color for Months
+
+
+
+
+
+```{r eruptions, echo=FALSE}
+     radioButtons("rd",
+                    label="Select variable for X-Axis:",
+                    choices=list("Wind","Solar","Temp"),
+                    selected="Wind")
+      checkboxInput("showlm", "Show/Hide Linear Model ", value = FALSE)
+      
+
+renderPlot({
+   
+    dataY<-airquality$Ozone
+    dataX <- switch(input$rd,
+                    Wind = airquality$Wind,
+                    Solar = airquality$Solar.R,
+                    Temp = airquality$Temp
+                   )
+    
+    xlab<-input$rd
+    ylab<-"Ozone"
+    color <- ifelse(airquality$Month == 5, 'red',
+                    ifelse(airquality$Month == 6, 'blue', 
+                           ifelse(airquality$Month==7,'black',
+                                  ifelse(airquality$Month==8,'yellow','green'))))
+  if(input$rd=="Wind"){
+    model <- lm(Ozone ~ Wind, data = airquality)
+
+  }
+    
+    if(input$rd=='Solar'){
+      model <- lm(Ozone ~ Solar.R, data = airquality)
+      
+    }
+    if(input$rd=='Temp'){
+      model <- lm(Ozone ~ Temp, data = airquality)
+      
+    }
+    
+     
+   if(input$showlm){
+     plot(dataX, dataY, xlab = xlab, ylab = ylab,col=color,pch=19 )
+     legend('topright', legend = c('May','June','July','August','Sep'), col = c('red','blue','black','yellow','green'), cex = 0.8, pch = 19) 
+     abline(model, col = "red", lwd = 2)
+        }
+      else{plot(dataX, dataY, xlab = xlab, ylab = ylab,col=color,pch=19 )
+        legend('topright', legend = c('May','June','July','August','Sep'), col = c('red','blue','black','yellow','green'), cex = 0.8, pch = 19) 
+      }
+         
+  })
+  ```
+
+
+
+
+
